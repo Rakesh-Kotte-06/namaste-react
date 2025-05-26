@@ -52,12 +52,13 @@ git add .
 git commit -m "episode-01"
 
 git remote add origin git@github.com:namastedev/namaste-react.git
+=> git remote add origin https://github.com/Rakesh-Kotte-06/namaste-react.git
 (this step we need to do for once to set up our local to the remote git repository)
 
 git push origin main
 
 https://github.com/namastedev/namaste-react
-
+our repo => https://github.com/Rakesh-Kotte-06/namaste-react
 Igniting Our App -- intro
 
 npm -- node package manager❌ npm does not have a full form ✅
