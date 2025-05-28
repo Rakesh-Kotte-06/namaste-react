@@ -204,7 +204,7 @@ It will give the production ready code files and also changes the names as well 
 npx parcel index.html
 
 you don't need to put the dist and .parcel-cache into the git
-we have to ignore => put distand and .parcel-cache in gitignore
+we have to ignore => put dist and .parcel-cache in gitignore
 
 Local -- pushed to git
 

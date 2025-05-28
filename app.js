@@ -1,3 +1,6 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+
 const heading = React.createElement(
   "h1",
   { id: "heading", className: "abcd", style: { background: "red" } },
@@ -13,7 +16,7 @@ To get the below html
 ReactELement(Object) => HTML(Browser Understands)
 */
 const parent = React.createElement("div", { id: "parent" }, [
-  React.createElement("div", { id: "Child" }, [
+  React.createElement("div", { id: "Child", key: "1" }, [
     React.createElement("h1", {}, "I'm a h1 tag"),
     React.createElement("h2", {}, "I'm a h2 tag"),
   ]),
