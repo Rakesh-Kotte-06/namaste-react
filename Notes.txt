@@ -1,0 +1,395 @@
+Episode 1 - Inception - React Basics
+
+✅ What is a CDN Link?
+A CDN (Content Delivery Network) link is a way to include external libraries (like React) directly via a URL hosted on a globally distributed server.
+
+✅ What is crossorigin?
+crossorigin is an attribute used in script/link tags to handle cross-origin requests and ensure secure fetching of resources like fonts or scripts from other domains.
+
+✅ Difference Between Development React and Production React
+Development React: Includes helpful warnings and error messages for debugging.
+Production React: Optimized for performance; smaller in size with debugging features removed.
+
+✅ React: Library or Framework?
+React is a Library, not a full-fledged framework.
+It is designed to build UI components and can be integrated into parts of a webpage (like a header, sidebar, etc.).
+React can run independently in a small portion of your app.
+It does not take over the entire HTML page—only manages the part inside the root element.
+
+React DOM Setup Flow:-
+
+✅ React.createElement()
+Creates a React element (JavaScript object), not an HTML element.
+Syntax:
+React.createElement(tagName, attributes, children)
+
+    Arguments:
+        tagName: HTML tag like div, h1, p, etc.
+        attributes: Properties like id, className, etc.
+        children:
+            Can be a single child (React element or string)
+            Or multiple children (as an array)
+
+✅ ReactDOM.createRoot(document.getElementById("root"))
+Connects React to the actual DOM element with id="root".
+Initializes the React app's rendering process.
+
+✅ root.render(<ReactElement>)
+Takes the React object created via createElement() (or JSX) and renders it into the DOM.
+It replaces any existing content inside the root element.
+
+✅ Why React is Called a Library
+React only works within the root element.
+The rest of the HTML remains unaffected.
+Hence, React can coexist with traditional HTML/CSS/JS.
+This modular nature is why React is a library, not a full framework.
+=================================================================================================
+Episode 2 – Igniting Our App 🚀
+
+✅ Git & GitHub Setup
+    Create a new public GitHub repository.
+    Set up SSH key for secure communication with GitHub.
+
+Initialize Git in VS code:
+    git init
+
+Create or rename branch to main:
+    git branch -M main
+    
+Create a README.md file.
+
+Push code to GitHub:
+    git add .
+    git commit -m "episode-01"
+    git remote add origin git@github.com:<your-username>/<repo-name>.git
+    --- git remote add origin https://github.com/Rakesh-Kotte-06/namaste-react.git
+        (this step we need to do for once to set up our local to the remote git repository) 
+    git push origin main
+
+✅ What is npm?
+    npm = Node Package Manager ❌ (not an acronym).
+    It doesn’t stand for Node Package Manager but functions as one.
+    One of the largest package managers in the world.
+
+✅ npm Initialization
+
+    npm init
+    Typical inputs:
+        package name: namaste-react
+        version: 1.0.0
+        description: This is Namaste React by Akshay Saini
+        entry point: App.js
+        test command: jest
+        repository: GitHub URL
+        keywords: react, namaste react, akshay saini
+        author: Akshay Saini
+        license: ISC
+
+➡️ Creates package.json – configuration file for npm.
+
+✅ Why package.json?
+    Keeps track of all project dependencies.
+    Bundlers like Parcel/Webpack are dependencies.
+    Needed for:
+        Bundling
+        Minifying
+        Compressing
+        Optimizing code for production
+
+✅ Bundlers Overview
+    Tools that prepare code for production:
+    Parcel, Webpack, Vite
+    create-react-app uses Webpack + Babel internally.
+    This course uses Parcel (easy to configure).
+
+✅ Installing Parcel
+    npm install -D parcel
+    -D → Development dependency (used only during dev)
+    There are two types of dependencies:
+    Development dependencies – Used in development only.
+    Production dependencies – Needed in production too.
+
+✅ Versioning Symbols
+    ^2.8.3: Allows minor updates, e.g., 2.9.0 (^ caret)
+    ~2.8.3: Allows patch updates only (~ tilde)
+    >=2.8.3	Allow everything from 2.8.3 and above (including major versions)
+
+    Avoid major updates (3.0.0) unless intentional (they may break your app).
+
+✅ package-lock.json
+    Records exact versions of installed packages.
+    Includes integrity hashes (SHA512) to ensure consistent installs.
+    Ensures:
+        Code works the same in local and production.
+
+Always push both:
+    package.json
+    package-lock.json
+
+✅ node_modules
+    Contains actual code of all installed packages.
+    Very large and heavy 😅
+    Should NOT be pushed to GitHub.
+    Add to .gitignore
+
+✅ Transitive Dependencies
+    A dependency (e.g., Parcel) can have its own dependencies.
+    These in turn have more dependencies.
+    This tree of dependencies makes node_modules huge.
+
+✅ Running Parcel
+    npx parcel index.html
+    npx: Executes a local dependency without installing globally.
+    Starts a dev server at https://localhost:1234
+
+✅ Why Avoid CDN for React?
+    CDN makes network calls (e.g., to unpkg.com) – slower.
+    With npm install, React and ReactDOM are part of your project.
+
+✅ Installing React Locally
+    npm install react react-dom
+    In App.js:
+        import React from "react";
+        import ReactDOM from "react-dom";
+        
+        If you're getting an import error:
+        It's because browser treats app.js as normal JS.
+        
+        Fix: Add type="module" in script tag(inside index.html file):
+        <script type="module" src="app.js"></script>
+
+✅ Parcel Warnings
+    In newer versions:
+
+Use:
+    import { createRoot } from "react-dom/client";
+    Older usage like import from "react-dom" will show warnings.
+
+✅ Parcel Features
+    01. Dev Build – Creates a development environment with live updates.
+    02. Local Server – Runs your app locally at localhost:1234.
+    03. HMR (Hot Module Replacement) – Instantly reflects code changes in the browser without full reload.
+    04. File Watching (C++) – Tracks changes in files efficiently for quick rebuilds.
+    05. Caching – Speeds up builds using .parcel-cache.
+    06. Image Optimization – Reduces image sizes automatically for better performance.
+    07. Minification – Removes unnecessary code/whitespace for smaller file sizes.
+    08. Bundling – Combines all files into a single optimized output.
+    09. Compression – Compresses assets to reduce loading time.
+    10. Consistent Hashing – Ensures unique file names for cache-busting.
+    11. Code Splitting – Loads only the required code chunks, improving performance.
+    12. Differential Bundling – Builds code separately for modern and older browsers.
+    13. Diagnostics – Displays clean and helpful error messages.
+    14. Error Handling – Catches and shows errors gracefully during build or runtime.
+    15. HTTPS Support – Allows running local dev server with HTTPS.
+    16. Tree Shaking – Removes unused code to reduce bundle size.
+    17. Dev/Prod Bundles – Generates different builds for development and production use.
+
+✅ Building for Production
+    npx parcel build index.html
+    Removes old "main": "App.js" from package.json
+
+    Creates optimized dist/ folder with minified code.
+
+✅ .gitignore Best Practices
+    Ignore:
+        node_modules/
+        dist/
+        .parcel-cache/
+
+✅ Deployment Workflow
+    Push code to GitHub.
+    Server pulls the code.
+    Server installs dependencies from package.json.
+    Server generates its own dist/ folder.
+    App gets hosted for end-users.
+
+✅ Browser Compatibility
+    To make your app work with older browsers, add this to package.json:
+
+        "browserslist": [
+        "last 2 versions"
+        ]
+
+    Or more specific:
+
+        "browserslist": [
+        "last 2 Chrome versions",
+        "last 2 Firefox versions"
+        ]
+
+✅ Useful Links:
+    Parcel Docs: https://parceljs.org
+    Browser support setup: https://browserslist.dev
+=========================================================================================================
+
+Episode 3 - Laying the Foundation
+
+🚀 Setting Up Scripts for Parcel
+
+✅ Dev Build Command:
+
+  ```bash
+  npx parcel index.html
+  ```
+
+  * Starts development server at `localhost:1234`.
+  * `npx` executes local packages.
+
+✅ Using Scripts in `package.json`:**
+
+  ```json
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  }
+  ```
+
+  * Run dev server: `npm start` or `npm run start`.
+  * Build production bundle: `npm run build`.
+  * `start` is a reserved script name; hence `npm start` works directly.
+
+⚛️ React.createElement vs JSX
+
+    ✅ Without JSX:
+
+    ```js
+        const heading = React.createElement("h1", { id: 'heading' }, "Namaste React");
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(heading);
+    ```
+
+    * `React.createElement` returns a **JavaScript object**, not an HTML element.
+
+    ✅ With JSX:
+
+    ```js
+        const jsxHeading = <h1>Namaste React Using JSX</h1>;
+    ```
+
+    * JSX is syntactic sugar for `React.createElement()`.
+    * Easier to read and write.
+    * JSX must be **transpiled** into JavaScript.
+
+🔍 What is JSX?
+
+✅ JSX (JavaScript XML):
+
+  * Looks like HTML but is XML-like syntax embedded in JS.
+  * Must be **transpiled** by Babel (used internally by Parcel).
+  * Not understood by browsers directly.
+  * Introduced by **Facebook** in **2013** with React.
+
+✅ Example:
+
+  ```js
+    const element = <h1>Hello, world!</h1>;
+    // Transpiled to:
+    const element = React.createElement("h1", null, "Hello, world!");
+  ```
+
+✅ Why Babel?
+
+  * Babel transpiles JSX to valid JavaScript.
+  * Enables browser compatibility.
+
+✅ 📝 JSX Syntax Rules
+
+    * Use `className` instead of `class`.
+    * JSX attributes use **camelCase** (e.g., `tabIndex`, `onClick`).
+    * Wrap multiple JSX elements in a single parent (`<div>`, fragment, etc.).
+
+    ```js
+        const element = (
+        <div>
+            <h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+        </div>
+        );
+    ```
+
+✅ Components in React
+
+    ✅ What is a Component?
+        * Reusable building block of UI.
+        * Returns JSX (UI code).
+        * Must start with a capital letter.
+
+    ✅ Two Types:
+        1. Class-based Components (Old way)
+        2. Functional Components (Modern and recommended)
+
+    ✅ Functional Component Example:
+        
+        ```js
+            const Heading = () => <h1>Namaste React</h1>;
+        ```
+
+    ✅ Rendering a Component:
+        
+        ```js
+            root.render(<Heading />);
+        ```
+
+🧬 Component Composition
+    * Nesting components inside each other.
+
+    ```js
+        const Name = () => <h2>Rakesh Kotte</h2>;
+
+        const Title = () => (
+            <div>
+                <h1>Namaste React</h1>
+                <Name />
+            </div>
+        );
+    ```
+    * Can also define components using `function` keyword, but `arrow functions` are preferred.
+
+    ```js
+        const Title = function () {
+            return (
+                <h2>By Akshay Saini</h2>
+            );
+        };
+    ```
+
+🔄 Embedding JavaScript in JSX
+    
+    * Use `{}` to insert JS expressions inside JSX.
+    ```js
+        const number = 10000;
+        const Info = () => <h2>Total Views: {number}</h2>;
+    ```
+    * You can even embed React elements and function calls:
+
+    ```js
+        {Title()}
+    ```
+
+🛡️ JSX Security - Sanitization
+
+    * JSX **escapes and sanitizes** data by default.
+    * Prevents XSS (Cross-Site Scripting) attacks.
+
+    Example:
+    ```js
+        const data = '<script>alert("Hacked!")</script>';
+        const Title = () => (
+            <div>
+                <h2>By Akshay Saini</h2>
+                {data} // Rendered as plain text, not executed
+            </div>
+        );
+    ```
+
+* JSX uses `textContent` (not `innerHTML`), so it's secure by default.
+* **Only dangerous method:** `dangerouslySetInnerHTML` (use cautiously)
+
+✅ Summary
+    * JSX is a powerful syntax introduced by Facebook to simplify UI creation.
+    * Parcel + Babel transpile JSX to valid JavaScript.
+    * Components are building blocks in React.
+    * Use arrow functions and PascalCase for components.
+    * JSX automatically protects against malicious code unless explicitly told not to.
+
+✅ JSX is developer-friendly but must be written carefully following syntax rules and security best practices.

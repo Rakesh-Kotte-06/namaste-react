@@ -1,3 +1,5 @@
+# Running Notes
+
 Episode 1 - Inception
 
 What is a CDN Link?
@@ -228,3 +230,153 @@ in the package.json we need to add
 or set for all browsers
 "last 2 version",
 ]
+===============================================================================================================
+Episode 3 - Laying the foundation
+
+To create the dev build we are writing the command npx parcel index.html this will host it up in localhost 1234
+npx executing the npm package parcel and the source file index.html
+
+To make easier we will write a script in package.json file
+in the package.json we can see script
+to start our project in dev server we have to write
+"start": "parcel index.html" inside the script
+
+now you need to give the command npm run start or npm start
+
+to build the production sever
+"build": "parcel build index.html"
+here you need to give the command as
+npm run build
+you cannot give the npm build because start is a reserved keyword by npm so whether you write npm run start or npm start it will consider it as npm run start
+
+Now Let's start coding
+
+const heading = React.createElement("tag", {attributes(object as attribute)}, "children")
+const heading = React.createElement("h1", {id: 'heading'}, "Namaste React"); this will create an object and when we render this object inside the root then it will create element
+because react is in JS in js everything object
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(heading);
+
+so now here to create a one singel we had to write this much of code instead of this we can use jsx to make it easier
+like
+
+"const jsxHeading = <h1> Namaste React Using JSX </h1>"
+JSX - is a HTML like or XML like syntax not HTML in JS
+somewhere html is related to js
+so jsx is a convention where html is merged with js
+
+It looks like HTML but is actually syntactic sugar for React.createElement() calls.
+JSX makes UI code easier to read and write by visually resembling the structure of HTML.
+Browsers don’t understand JSX, so it must be transpiled (usually by Babel) into standard JavaScript.
+
+Introduced by Facebook
+In 2013, alongside React (which was open-sourced in May 2013)
+Designed to improve developer experience when building UIs with React
+
+const element = <h1>Hello, world!</h1>;
+// Transpiled to:
+const element = React.createElement("h1", null, "Hello, world!");
+
+JSX is not pure js and js engine won't understand it
+because it follows ECMAscript ES (pure js)
+If you write jsx code in pure js file it will through you an error
+Parcel will work behind the scenes to work jsx in js engine
+like parcel will transpile jsx code into the code that js engine understands
+transpiled(converted) before it reaches the JS Engine and is done by PARCEL(Babel)
+Babel is a package of Parcel
+Babel is transpiling the code of jsx syntax into the code that js engine, react will understand
+
+In jsx if you want to give class name for your element
+you have to write className instead class
+
+If you want give attribute in your jsx elements use camel case
+single line
+
+<h1>Heading</h1>
+vs 
+Multiple lines
+(
+   <div>
+      <h1>Heading 1</h1>
+      <h2>Heading 2</h2>
+   </div>
+)
+
+React Component
+Everything in react is a component
+
+What is a component?
+
+Class Based -- old way of writing code
+class based uses js classes to create class based components
+
+Functional component -- New
+Functional based uses js functions to create functional components
+It is just a normal js function
+
+to create it name it with capital letter otherwise it will give an error because it is a react way to understand that it is a component
+
+A function that returns the react element(jsx code) that is functional component.
+
+const Fn1 = () => true;
+const Fn2 = () => {return true};
+both are same
+
+if you want to render the functional component you need to wrap it inside a tag like
+<F1></F1> or <F1/>
+root.render(<F1/>);
+
+component composition ?
+a component is inside anther component is called as component composition
+like here:
+const Heading = () => <h2>Rakesh Kotte</h2>
+const Title = () => (
+
+   <div>
+      <h1>Namaste React</h1>
+      <Heading />
+   </div>
+);
+You can also normal function
+
+const Title = function () {
+return (
+
+   <h2 id="author" className="author">
+      By Akshay Saini
+   </h2>
+   );
+};
+but use arrow functions because it's an industry wise standards as most of the developers use them
+
+{} => inside this you any js
+const number = 10000;
+
+you can add it in the Title component and you can put a react element inside the component with this
+const Title = function () {
+return (
+
+   <h2 id="author" className="author">
+      By Akshay Saini
+   </h2>
+   {number}
+   );
+};
+
+and you can call Title as a function => {Title()}
+
+suppose some malicious data is coming from an api which is sent by an attacker
+const data = api.getData();
+
+const Title = function () {
+return (
+
+   <h2 id="author" className="author">
+      By Akshay Saini
+   </h2>
+   {data}
+   );
+};
+
+but here jsx will santise your data
