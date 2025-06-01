@@ -379,4 +379,92 @@ return (
    );
 };
 
-but here jsx will santise your data
+but here jsx will escapesa and santise your data
+
+=================================================================================================
+Episode 04 - Talk is Cheap, show me the code!
+
+Food Ordering App
+
+How can you build and what is the thought process?
+Header
+Food - Restaurants
+Dishes
+
+Plan your things
+like what you are building and how it should look like
+
+Name your app - Namaste Food
+\*\* Heading
+
+- Logo
+- Nav Items
+  \*\* Body
+- Search
+- Restaurant Container
+- Restaurant Card
+  \*\* Footer
+- Copyright
+- Links
+- Address
+- Contact
+
+Why multiple curly braces for style attribute?
+
+const styleSearch = {
+backgroundColor: "red",
+}
+
+<div style={{ fontWeight: 900, ...styleSearch}}></div>
+
+The first {} tells JSX that you're inserting a JavaScript expression.
+Inside that, you're passing a JavaScript object, so you need another pair of {}.
+
+Adding dynamic data
+let first restaurant card Meghana Foods
+and second restaurant card KFC
+
+Props - Properties => arguments to a function(functional component which is a js function )
+
+It is something which you can pass to the component
+
+like
+<RestaurantCard restName="Meghana Foods" cuisine="Biryani, North Indian, Asian" />
+<RestaurantCard restName="KFC" cuisine="Burger, Fast Food" />
+
+in RestaurantCard component we can import these arguments(props)
+const RestaurantCard = (props) => {
+console.log(props);
+const {restName = "Meghana Foods",cuisine = "Biryani, North Indian, Asian",} = props;
+return (
+
+<div className="res-card">
+<h3>{restName} or {props.restName --> importing them directly from props at this place instead of destructuring them }</h3>
+<h4>{cuisine}</h4>
+</div>
+);
+};
+or we can destructure them directly
+const RestaurantCard = ({restName, cuisine}) => {
+const {
+restName = "Meghana Foods",
+cuisine = "Biryani, North Indian, Asian",
+} = props;
+return (
+<div className="res-card">
+<h3>{restName}</h3>
+<h4>{cuisine}</h4>
+</div>
+);
+};
+
+But usually we get data from the backend or api's in json format
+let's debug swiggy data
+go to swiggy
+inspect it
+then go to network tab
+click on the fetch api
+select preview
+check the data
+
+now let's open the data in a new tab and to show the data in such way to be understandable lets install json viewer chrome extension or you can check the pretty-print

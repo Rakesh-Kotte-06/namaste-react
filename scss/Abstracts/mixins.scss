@@ -1,0 +1,14 @@
+@mixin display_flex($justify: flex-start, $align: stretch) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+}
+.display_flex {
+  @include display_flex();
+}
+.display_flex__center {
+  @include display_flex(center, center);
+}
+.display_flex__between {
+  @include display_flex(space-between, center);
+}

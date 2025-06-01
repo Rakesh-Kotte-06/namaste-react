@@ -1,44 +1,103 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./styles.scss";
+import Restaurant_logo from "./Assets/Restaurant_logo.jpg";
 // create react element using Core React
-const heading = React.createElement("h1", { id: "heading" }, "Namaste React");
-// JSX - is a HTML like or XML like syntax not HTML in JS
-// creating react element using JSX
-const jsxHeading = (
-  <div id="container">
-    <h1 id="heading" className="head" tabIndex="5">
-      Namaste React using JSX
-    </h1>
-    <h2 id="heading" className="head" tabIndex="5">
-      By Akshay Saini
-    </h2>
-  </div>
-);
 
-console.log(heading, jsxHeading); //both are same
+/*  ** Heading
+ * Logo
+ * Nav Items
+ ** Body
+ * Search
+ * Restaurant Container
+ * Restaurant Card
+ ** Footer
+ * Copyright
+ * Links
+ * Address
+ * Contact
+ */
 
-const Title = function () {
+const Header = () => {
   return (
-    <h2 id="author" className="author">
-      By Akshay Saini
-    </h2>
+    <div className={"header display_flex__between"}>
+      <div>
+        <img className="logo" src={Restaurant_logo} />
+      </div>
+      <div className="nav-items">
+        <ul className="display_flex__center">
+          <li>Home</li>
+          <li>About Us</li>
+          <li>Contact Us</li>
+          <li>Cart</li>
+        </ul>
+      </div>
+    </div>
   );
 };
-const hike = "14%";
-const HeadingComponent = () => (
-  <div id="container">
-    <Title />
-    {/* /*you can call it as a function*/}
-    {Title()}
+const styleSearch = {
+  color: "blue",
+};
+const RestaurantCard = (props) => {
+  console.log(props);
+  const {
+    restName = "Meghana Foods",
+    cuisine = "Biryani, North Indian, Asian",
+  } = props;
+  return (
+    <div className="res-card">
+      <img
+        alt="Restaurant Card Image"
+        className="res-card__img"
+        src={Restaurant_logo}
+      />
+      <h3>{props.restName}</h3>
+      <h4>{cuisine}</h4>
+      <h4>4.4 Stars</h4>
+      <h4>38 Minutes</h4>
+    </div>
+  );
+};
+const Body = () => {
+  return (
+    <div className="body">
+      <div className="search" style={{ fontWeight: 900, ...styleSearch }}>
+        Search
+      </div>
+      <div className="res-container display_flex">
+        <RestaurantCard
+          restName="Meghana Foods"
+          cuisine="Biryani, North Indian, Asian"
+        />
+        <RestaurantCard restName="KFC" cuisine="Burger, Fast Food" />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+        <RestaurantCard />
+      </div>
+    </div>
+  );
+};
 
-    <h1 id="heading" className="head" tabIndex="5">
-      Namaste React using JSX
-    </h1>
-    {hike}
-    {console.log(hike, "Hike")}
-    {heading}
-  </div>
-);
-console.log(<HeadingComponent />);
+const AppLayout = () => {
+  return (
+    <div className="app-container">
+      {/* Header */}
+      {/* Body */}
+      {/* Footer */}
+      <Header />
+      <Body />
+    </div>
+  );
+};
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<HeadingComponent />);
+root.render(<AppLayout />);

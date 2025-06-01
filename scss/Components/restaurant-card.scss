@@ -1,0 +1,17 @@
+.res-container {
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.res-card {
+  width: 200px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  padding: 10px;
+  &:hover {
+    border: 1px solid #000;
+    cursor: pointer;
+  }
+  &__img {
+    width: 100%;
+  }
+}
