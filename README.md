@@ -468,3 +468,236 @@ select preview
 check the data
 
 now let's open the data in a new tab and to show the data in such way to be understandable lets install json viewer chrome extension or you can check the pretty-print
+
+important: Config driven ui
+Our website is driven by data config
+Controlling your ui using (data / api)config that config comes backend
+your ui is basically driven by data
+can be diff for diff locations
+
+whenever you do a map you have to add key
+if you don't write key it give through a big performance issue it will rerender everything all things so we have to add key and some people use index as the key
+
+but react says using index as key is a bad practice which is written in a article from Robin Pokorny - "Index as a key is an anti-pattern"
+
+It is okay to use but it's not recommended
+
+=================================================================================
+Episode 5 - Let's get Hooked!
+
+https://legacy.reactjs.org/docs/faq-structure.html
+api/
+APIUtils.js
+APIUtils.test.js
+ProfileAPI.js
+UserAPI.js
+components/
+Avatar.js
+Avatar.css
+Feed.js
+Feed.css
+FeedStory.js
+FeedStory.test.js
+Profile.js
+ProfileHeader.js
+ProfileHeader.css
+
+Here you can write your file extension as js or jsx no issues
+anyways it is javascript code
+
+Here after putting Header component we need if we want to import it into the app.js file first we need to export it from the Header.js file at the end of the file
+
+export default Header;
+
+then we need to import it
+import Header from "./components/Header";
+
+Here there is no need to give .js or .jsx extension React will consider it as js file by itself.
+
+Never use a hardcoded code in your component
+
+put it in a common folder you can name it as common, config or utils
+utils means utilities that can be used all accross the app
+and name the file as constant.js here c is not a capital letter because this is not a component
+
+There are two ways to export something like component, file, variable etc.,
+
+export default is used at the last in a file where we can only export one thing like one component, variable, image
+
+where as to do multiple exports we need to use "Named export"
+example:
+export const CDN_URL = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/"
+export const LOGO_URL = "https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png"
+
+if you use default export you just need to import it in regular way, like
+import Header from "../components";
+
+If you use named export then you need to write curly braces to import it, like
+import {CDN_URL} from "./utils/constants";
+
+// create react element using Core React
+/\* \*\* Heading
+
+- Logo
+- Nav Items
+  \*\* Body
+- Search
+- Restaurant Container
+- Restaurant Card
+  \*\* Footer
+- Copyright
+- Links
+- Address
+- Contact
+  \*/
+
+can we do default export with named export in react
+If yes what is the use of it and where we mostly use it
+
+export const Button = () => {
+return (
+
+<div>
+<h1>Hi Kotte</h1>
+</div>
+);
+};
+
+export default Button;
+
+⚠️ Why might this be useful?
+To give flexibility in how your component is consumed.
+To maintain compatibility with tools, team preferences, or older codebases.
+When building libraries, it's a common pattern.
+
+Normal variable
+let listOfRestaurants = [];
+
+State Variable - super powerful variable
+
+#React Hooks:
+are normal js utility functions which is given to us by react
+(written by fb devlopers - inside the react)
+
+-useState():
+-- Whenever a state variable updates React will re-renders this component.
+
+-useEffect()
+
+How to use?
+we have to import them
+
+const [listOfRestaurants] = useState([]); -- state variable
+let listOfRestaurants=[]; --Normal variable
+
+const [listOfRestaurants] = useState([null]);
+let listOfRestaurants=null; --Normal variable
+
+Reconciliation Algorithm (React Fibre):
+
+this is the reason behind the reacts superfast
+this is the react core algorithm
+
+suppose when you initially created a restaurant container with 6 res cards
+then react will creates a virtual dom of it
+Actual DOM:
+
+<div>
+   <h1> Rakesh Kotte</h1>
+   <div>
+      <img alt="Rakesh Kotte" src="rakesh.svg" />
+   </div>
+</div>
+Virtual DOM: is a representation of actual DOM
+{
+  type: 'div',
+  props: {
+    children: [
+      {
+        type: 'h1',
+        props: {
+          children: 'Rakesh Kotte'
+        }
+      },
+      {
+        type: 'div',
+        props: {
+          children: {
+            type: 'img',
+            props: {
+              alt: 'Rakesh Kotte',
+              src: 'rakesh.svg'
+            }
+          }
+        }
+      }
+    ]
+  }
+}
+
+and when you click the button to filter the cards
+react will follows the diff algorithm
+which is like git diff where we see the changes in the file (prev and updated)
+same way this diff algorithm will check the previous object and the filtered object after it finds the difference it will update the it to the actual DOM (html)
+
+React uses React fibre to update the ui by finding the difference between the old virtual dom and new virtual dom
+
+this is the reason that react is most popular in ui market
+
+This is introduced in React16
+https://github.com/acdlite/react-fiber-architecture
+
+const [listOfRestaurants, setListOfRestaurants] = useState(resList);
+
+as soon as you call the setListOfRestaurants react will finds out the diff and update the ui
+
+and we can write it in another way as well
+
+const arr = useState(resList);
+const [listOfRestaurants, setListOfRestaurants] = arr
+const listOfRestaurants = arr[0];
+const setListOfRestaurants = arr[1]
+
+===================================================
+Episode 6 - Exploring the world
+Monolith Architecture:
+traditional way of developing applications where have single environment for all the backend, frontend, db and all
+
+🧱 Monolithic Architecture
+-- Single codebase and deployment.
+-- All features (UI, logic, DB) are tightly coupled.
+-- Easy to build, test, and deploy initially.
+-- Hard to scale individual parts.
+-- One bug can affect the whole app.
+
+🧩 Microservices Architecture
+-- App is split into small, independent services.
+-- Each service has its own logic and database.
+-- Easier to scale and update independently.
+-- Allows different tech stacks per service.
+-- Needs complex setup (APIs, monitoring, etc.).
+
+Microservices Architecture:
+--This is known as separtion of concerns
+--It follows single responsibility principle where each and every service has it's own job.
+
+How will a reat application will backend api call and fetch the data?
+there are two ways
+
+1. Loads => make api call(wait 500ms) => get data => render ui
+2. Loads => render UI => make an api call => render application with data once again (better UX in react we will follows mostly this)
+
+what is a hook in react:
+a normal js function it has it's own specific function
+
+useEffect Hook:
+-- come from react lib and imported as named import
+
+useEffect comes with with two arguments
+
+1. Callback function (arrow function) and
+2. Dependency array
+
+It will called after your component renders
+
+fetch is given by a browser
