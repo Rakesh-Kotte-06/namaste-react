@@ -701,3 +701,148 @@ useEffect comes with with two arguments
 It will called after your component renders
 
 fetch is given by a browser
+
+UseEffect will be called after your component renders so call the fetch data function from here
+useEffect(() => {
+fetchData();
+},[]);
+
+use async await for fetching the data which is the standard practice
+
+const fetchData = async () => {
+now fetch that api from the browser
+const response = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.3830&lng=78.45830&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+
+Now convert the data to the json format
+const data = await response.json();
+
+now store the required data in a variable to assign it to the list
+let restau = data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+use this useState function to update the list
+setListOfRestaurants(restau || []);
+};
+
+this will be shown when there is no data
+if (listOfRestaurants.length === 0) {
+return (
+
+<div className="loading">
+<h1>Loading</h1>
+</div>
+);
+}
+yet, this is not a good practice....
+
+the Good practice is adding Shimmer UI
+
+Shimmer UI: There os a concept called shimmer ui
+A shimmer UI resembles the page's actual UI, so users will understand how quickly the web or mobile app will load even before the content has shown up.
+
+while your data is loading show shimmer ui to make it userfriendly.
+
+Conditional rendering: Rendering on the basis of the conditions is knwon as conditional rendering.
+
+=> Why do we use useState why can't we use local variables inside react?
+
+for suppose
+let btnName = "Login";
+
+<button onClick={() => {btnname = "Logout"; console.log(btnName)}}>{btnName}</button>
+Here if you click on the btnName will be updated logout but UI won't change...
+
+🤔Why? What's happening?
+You're updating the btnName variable directly, but react doesn't know that it changed.
+
+React components re-render when state or props change - not when a regular variable changes.
+
+when you use useState like click the btn here it will re-render the entire Header Component.
+
+How can a const variable changed while using the useState?
+When you use `useState`, you declare your state variable with `const`, like this:
+
+```js
+const [count, setCount] = useState(0);
+```
+
+It might seem confusing-how can `count` change if it's a `const`?
+The answer is:
+
+- `const` means you can't reassign the variable name `count` itself.
+- But on every render, React **creates a new variable** named `count` with the latest state value.
+- So, each render gets its own fresh `count` variable, always up-to-date.
+
+When you call `setCount(newValue)`, React schedules a re-render. On the next render, `count` will have the new value.
+
+**In summary:**
+The variable name stays the same, but React gives it a new value on each render. That's why using `const` with `useState` works!..
+
+const [searchText, setSearchText] = useState("");
+
+<div className="search">
+<input type="text" className = "search__box" value = {searchText} />
+<button className="search__btn" onClick={() => {
+  console.log(searchText, "Search button clicked!...");
+  
+}>Search</button>
+</div>
+Here your search input box won't work because value is bind to the searchText you need to add onChange function
+
+onChange = {(e) => {setSearchText(e.target.value)}}
+
+now when you press any key inside this input each time the react will rerender the whole body component.
+Whenever a state variable updates react will triggers a reconciliation cycle (re-render the component).
+It will findout the difference between older and new varsions of virtual DOM and update that difference.
+
+Why react is faster?
+**React fiber** will find out the diff from the Virtual-DOM and update the DOM this also makes react so fast.
+const response = await fetch(
+"https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.5412112&lng=78.43384809999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+);
+use this https://corsproxy.io infront of api to avoid using the cors extension because everyone who will clone your code may not use this cors extension.
+
+**Router Provider:**
+Will provide, routing configuration to our app
+
+React will give you a router error hook called useRouteError
+import {useRouteError} from "react-router-dom"
+It gives you more info about error instead instead of writing random error
+It will give you specific routing error.
+
+**Children Routes:**
+For all the screens we will be keeping our header component and only our body is going to change for that we have to use this children routes.
+
+- The About and Contact components will be rendered based on the route
+- Error component will handle any errors that occur in the app
+- The RouterProvider will provide the routing functionality to the app
+- The createBrowserRouter function creates a router instance for the app
+- The appRouter variable holds the router instance
+
+- If path is = /
+<Body />
+
+- The About component will be rendered when the path is /about
+  <About />
+
+- The Contact component will be rendered when the path is /contact
+  <Contact />
+
+import Outlet from the react-router-dom
+
+- The Outlet component will render the child routes defined in the appRouter
+
+You can navigate to new page without reloading the whole page
+
+- Link
+  Link component imported from react-router-dom
+  import { Link } from "react-router-dom";
+
+  Works same as anchor tag <a />
+  we just have to use the attribute called to instead of href
+    <Link to="/about">
+  when you anchor tag for navigating it will reload the whole page
+  where as the link component will not reload the whole page it will just replace the component
+
+# Routing in Web Apps
+
+1. Client Side Routing: The routing is handled by JavaScript in the browser. When you navigate to a different route, the page does not reload; instead, the view is updated dynamically by rendering different components. This provides a smoother and faster user experience.
+2. Server Side Routing: you have index.html, about.html etc,.. if i click on my anchor tag /about it will whole page and sends the network call to about.html and fetches the about.html and renders that onto the webpage

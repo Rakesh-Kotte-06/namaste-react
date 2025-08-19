@@ -1,0 +1,30 @@
+.user-card {
+  width: calc(100% / 2);
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+
+  &__name {
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  &__bio {
+    font-size: 16px;
+    color: #666;
+    padding: 0 20px;
+  }
+  &__btn {
+    padding: 10px 20px;
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+      background-color: #e5533d;
+    }
+  }
+}

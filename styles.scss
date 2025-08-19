@@ -1,20 +1,40 @@
 @use "./scss/Abstracts/mixins.scss";
 @use "./scss/Components/restaurant-card.scss";
+@use "./scss/Components/shimmer.scss";
+@use "./scss/Components/user-card.scss";
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
 }
 .app-container {
-  padding: 0 20px;
+  padding: 10px 20px;
   .header {
     .logo {
-      width: 60px;
+      width: 50px;
     }
     .nav-items {
       ul {
         list-style-type: none;
         gap: 20px;
+        li {
+          display: inline-block;
+          font-size: 18px;
+          color: #333;
+          cursor: pointer;
+          &:hover {
+            color: #ff6347;
+          }
+        }
+      }
+      .login-btn {
+        padding: 10px 20px;
+        background-color: #ff6347;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
       }
     }
   }
@@ -22,6 +42,38 @@
     .search,
     .filter {
       padding: 10px;
+      display: flex;
+      gap: 10px;
+      &__box {
+        height: 35px;
+        width: 250px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      &__btn {
+        height: 35px;
+        padding: 10px 20px;
+        background-color: #ff6347;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    }
+    .search {
+      gap: 0;
+      padding: 0;
+      &__box {
+        border-radius: 4px 0 0 4px;
+      }
+      &__btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
     }
   }
+}
+.wrapper__link {
+  width: calc(25% - 20px);
 }

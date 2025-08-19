@@ -15,7 +15,7 @@ const RestaurantCard = (props) => {
       <h4 style={{ paddingTop: "14px" }}>{cuisines.join(", ")}</h4>
       <h4 style={{ paddingTop: "14px" }}>{avgRating} Stars</h4>
       <h4 style={{ paddingTop: "14px" }}>{constForTwo}</h4>
-      <h4 style={{ paddingTop: "14px" }}>{sla.deliveryTime} Minutes</h4>
+      <h4 style={{ paddingTop: "14px" }}>{sla.slaString}</h4>
     </div>
   );
 };
