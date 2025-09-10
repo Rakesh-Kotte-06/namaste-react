@@ -846,3 +846,44 @@ You can navigate to new page without reloading the whole page
 
 1. Client Side Routing: The routing is handled by JavaScript in the browser. When you navigate to a different route, the page does not reload; instead, the view is updated dynamically by rendering different components. This provides a smoother and faster user experience.
 2. Server Side Routing: you have index.html, about.html etc,.. if i click on my anchor tag /about it will whole page and sends the network call to about.html and fetches the about.html and renders that onto the webpage
+
+# Chunking
+
+# Code Splitting
+
+# Dynamic Bundling
+
+# lazy loading
+
+# on Demand loading
+
+this below code is useful to complete delete the nodemodules and package-lock.json
+rd /s /q node_modules
+del package-lock.json
+then again install the npm
+npm install
+
+Installing tailwind css
+npm install -D tailwindcss postcss
+npx tailwindcss init
+
+but in our project it didn't worked so, we have to use this below method to install after deleting the node modules and package-lock.json and installing npm run the below code
+
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+this below code is to verify the binary is created
+dir node_modules\.bin
+
+wirte the below code in tailwind.config.js
+
+/** @type {import('tailwindcss').Config} \*/
+module.exports = {
+content: [
+"./src/**/\*.{js,jsx,ts,tsx}", // 👈 tell Tailwind where to look for classes
+],
+theme: {
+extend: {},
+},
+plugins: [],
+}

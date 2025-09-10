@@ -2,8 +2,6 @@ import React from "react";
 class UserClass extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(props);
-    // console.log(this.props.name + " Child Constructor");
     this.state = {
       count: 0,
       userInfo: {
@@ -15,11 +13,9 @@ class UserClass extends React.Component {
   }
 
   async componentDidMount() {
-    // console.log(this.props.name + " Child Component did mount is called");
     // Api call can be made here
     const data = await fetch("https://api.github.com/users/akshaymarch7");
     const json = await data.json();
-    console.log("User Data:", json);
 
     this.setState({
       userInfo: json,
@@ -29,19 +25,15 @@ class UserClass extends React.Component {
     }, 1000);
   }
 
-  componentDidUpdate() {
-    console.log("Component Did Update");
-  }
+  componentDidUpdate() {}
 
   componentWillUnmount() {
     clearInterval(this.timer);
-    console.log("Component will unmount");
   }
 
   render() {
     const { name, location, avatar_url } = this.state.userInfo;
     // const { count } = this.state;
-    // console.log(this.props.name + " Child Rendered");
     return (
       <div className="user-card">
         {/* <div className="display_flex__center gap-1 m-1">
@@ -49,7 +41,6 @@ class UserClass extends React.Component {
             className="user-card__btn"
             onClick={() => {
               this.setState({ count: count - 1 });
-              console.log("Count Decrease to:", count - 1);
             }}
           >
             Decrease Count
@@ -59,7 +50,6 @@ class UserClass extends React.Component {
             className="user-card__btn"
             onClick={() => {
               this.setState({ count: count + 1 });
-              console.log("Count increased to:", count + 1);
             }}
           >
             Increase Count

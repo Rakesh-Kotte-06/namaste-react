@@ -1,4 +1,4 @@
-@mixin display_flex($justify: flex-start, $align: stretch) {
+@mixin display_flex($justify: flex-start, $align: center) {
   display: flex;
   justify-content: $justify;
   align-items: $align;
@@ -12,21 +12,54 @@
 .display_flex__between {
   @include display_flex(space-between, center);
 }
+.flex__column {
+  flex-direction: column;
+}
 .gap-1 {
   gap: 0.5rem;
 }
 .gap-2 {
   gap: 1rem;
 }
-.m-1 {
-  margin: 0.5rem;
+$values: (
+  0: 0,
+  1: 0.5rem,
+  2: 1rem,
+  3: 1.5rem,
+  4: 2rem,
+  5: 2.5rem,
+);
+
+$margin-map: (
+  m: margin,
+  mx: margin-inline,
+  my: margin-block,
+  mt: margin-top,
+  mb: margin-bottom,
+  ml: margin-left,
+  mr: margin-right,
+);
+
+$padding-map: (
+  p: padding,
+  px: padding-inline,
+  py: padding-block,
+  pt: padding-top,
+  pb: padding-bottom,
+  pl: padding-left,
+  pr: padding-right,
+);
+
+@mixin generate-spacing-classes($map, $values) {
+  @each $prefix, $property in $map {
+    @each $key, $val in $values {
+      .#{$prefix}-#{$key} {
+        #{$property}: $val;
+      }
+    }
+  }
 }
-.m-2 {
-  margin: 1rem;
-}
-.mt-1 {
-  margin-top: 0.5rem;
-}
-.mt-2 {
-  margin-top: 1rem;
-}
+
+// Generate all margin and padding classes with one mixin call each
+@include generate-spacing-classes($margin-map, $values);
+@include generate-spacing-classes($padding-map, $values);

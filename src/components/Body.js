@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { WithDiscount } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
+import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredList, setFilteredList] = useState([]);
+  const RestaurantCardWithDiscount = WithDiscount(RestaurantCard);
+
   useEffect(() => {
     fetchData();
-    console.log("useEffect called");
   }, []);
   // Fetch data from the API and update the state;
   const fetchData = async () => {
@@ -18,19 +21,23 @@ const Body = () => {
         "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.5412112&lng=78.43384809999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
       );
       const data = await response.json();
-      console.log("data", data);
       // Extracting the restaurants from the data
       let restaurants =
         data?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants;
-      console.log(".....restaurants", restaurants);
       setListOfRestaurants(restaurants || []);
       setFilteredList(restaurants || []);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+    } catch (error) {}
   };
-  console.log("Body Rendered");
+  const onlineStatus = useOnlineStatus();
+  const { loggedInUser, setUserName } = useContext(UserContext);
+  if (!onlineStatus) {
+    return (
+      <h1>
+        Looks like you are offline! Please check your internet connection.
+      </h1>
+    );
+  }
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
@@ -40,21 +47,19 @@ const Body = () => {
           <input
             type="text"
             placeholder="Search Restaurants"
-            className="search__box"
+            className="search__box border border-solid"
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
           />
           <button
-            className="search__btn"
+            className="search__btn bg-green-100 p-1 rounded-md"
             onClick={() => {
-              console.log("Search Button Clicked!");
               const searchedList = listOfRestaurants.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
               setFilteredList(searchedList);
-              console.log("Searched List:", searchedList);
             }}
           >
             Search
@@ -64,19 +69,29 @@ const Body = () => {
         <button
           className="filter__btn"
           onClick={() => {
-            console.log("Button Clicked!");
             // filter the restaurants based on rating
             const filteredRestautants = listOfRestaurants.filter(
               (restaurant) => {
                 return restaurant.info.avgRating >= 4.3;
               }
             );
-            console.log("Filtered Restaurants:", filteredRestautants);
             setFilteredList(filteredRestautants);
           }}
         >
           Top Rated Restaurants
         </button>
+        <div>
+          <label>userName: </label>
+          <input
+            type="text"
+            placeholder="userName"
+            className="search__box border border-solid"
+            value={loggedInUser}
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+          />
+        </div>
       </div>
       <div className="res-container display_flex">
         {filteredList.map((restaurant) => (
@@ -85,7 +100,11 @@ const Body = () => {
             key={restaurant.info.id}
             className="wrapper__link"
           >
-            <RestaurantCard restData={restaurant.info} />
+            {restaurant.info.isOpen ? (
+              <RestaurantCardWithDiscount restData={restaurant.info} />
+            ) : (
+              <RestaurantCard restData={restaurant.info} />
+            )}
           </Link>
         ))}
       </div>

@@ -9,7 +9,6 @@
   font-family: "Courier New", Courier, monospace;
 }
 .app-container {
-  padding: 10px 20px;
   .header {
     .logo {
       width: 50px;
@@ -76,4 +75,13 @@
 }
 .wrapper__link {
   width: calc(25% - 20px);
+}
+.text-center {
+  text-align: center;
+}
+.positon_relative {
+  position: relative;
+}
+.position_absolute {
+  position: absolute;
 }
