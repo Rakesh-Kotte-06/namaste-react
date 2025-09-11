@@ -1,6 +1,7 @@
 //  React
 import { useContext, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // Assets
 import Restaurant_logo from "../../Assets/Restaurant_logo.jpg";
@@ -15,6 +16,10 @@ const Header = () => {
   const onlineStatus = useOnlineStatus();
   const [btnName, setBtnName] = useState("login");
   const dataContext = useContext(UserContext);
+
+  //  Subscribing to the store using a hook Selector
+  const cartitems = useSelector((store) => store.cart.items);
+  console.log("cart items", cartitems);
   return (
     <div
       className="header display_flex__between flex justify-between shadow-lg bg-pink-100 px-2"
@@ -40,7 +45,10 @@ const Header = () => {
           <li className="nav-item">
             <Link to="/grocery">Grocery</Link>
           </li>
-          <li className="nav-item">Cart</li>
+          <li className="nav-item">
+            <Link to="/cart">🛒</Link>
+            <span className="cart-count">{cartitems.length}</span>
+          </li>
           <li>
             <button
               className="login-btn"
